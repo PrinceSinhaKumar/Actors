@@ -18,12 +18,18 @@ class ViewController: UIViewController {
         let concurrentQueue2 = DispatchQueue(label: "com.concurrent.queue2",qos: .default, attributes: .concurrent)
         
         concurrentQueue1.async {
-            let booked = tsViewModel.bookedTicket()
-            print("Booked \(booked)")
+            Task {
+                let booked = await tsViewModel.bookedTicket()
+                print("Booked \(booked)")
+            }
         }
         concurrentQueue2.async {
-            let available = tsViewModel.getAllTickets()
-            print("Available \(available)")
+            
+            Task {
+                let available =  await tsViewModel.getAllTickets()
+                print("Available \(available)")
+            }
+            
         }
         
     }

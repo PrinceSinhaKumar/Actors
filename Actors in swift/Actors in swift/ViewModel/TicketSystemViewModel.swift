@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TicketSystemViewModel {
+actor TicketSystemViewModel {
     
     private let companyName: String = "Indigo airlines"
     private var availableTickets: [String] = ["1A","2A","1B","2B","1C","2C"]
