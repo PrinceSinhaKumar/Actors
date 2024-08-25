@@ -19,10 +19,12 @@ class ViewController: UIViewController {
         let concurrentQueue2 = DispatchQueue(label: "com.concurrent.queue2",qos: .default, attributes: .concurrent)
         
         concurrentQueue1.async {
-           baViewModel.debetMoneyFromAccount(amount: 100)
+            let booked = baViewModel.bookedTicket()
+            print("Booked \(booked)")
         }
         concurrentQueue2.async {
-            baViewModel.debetMoneyFromAccount(amount: 600)
+            let available = baViewModel.getAllTickets()
+            print("Available \(available)")
         }
         
     }
