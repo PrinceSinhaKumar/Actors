@@ -8,25 +8,39 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-        
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+ 
+        let tsViewModel = TicketSystemViewModel()
         
-        let baViewModel = BankAccountViewModel()
+        Task {
+            let tickets = await tsViewModel.bookedTicket()
+            print("Booked \(tickets)")
+        }
+        
+        Task {
+            let tickets = await tsViewModel.getAllTickets()
+            print("Available \(tickets)")
+        }
+//        
+//        let queue1 = DispatchQueue(label: "q1", attributes: .concurrent)
+//        let queue2 = DispatchQueue(label: "q2", attributes: .concurrent)
+//        
+//        queue1.async {
+//            let tickets = tsViewModel.bookedTicket()
+//            print("Booked \(tickets)")
+//        }
+//        
+//        queue2.async {
+//            let tickets = tsViewModel.getAllTickets()
+//            print("Available \(tickets)")
+//        }
 
-        let concurrentQueue1 = DispatchQueue(label: "com.concurrent.queue1",qos: .default, attributes: .concurrent)
-        let concurrentQueue2 = DispatchQueue(label: "com.concurrent.queue2",qos: .default, attributes: .concurrent)
-        
-        concurrentQueue1.async {
-           baViewModel.debetMoneyFromAccount(amount: 100)
-        }
-        concurrentQueue2.async {
-            baViewModel.debetMoneyFromAccount(amount: 600)
-        }
         
     }
-
-
+    
+    
 }
 
