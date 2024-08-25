@@ -14,30 +14,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
  
         let tsViewModel = TicketSystemViewModel()
+        let concurrentQueue1 = DispatchQueue(label: "com.concurrent.queue1",qos: .default, attributes: .concurrent)
+        let concurrentQueue2 = DispatchQueue(label: "com.concurrent.queue2",qos: .default, attributes: .concurrent)
         
-        Task {
-            let tickets = await tsViewModel.bookedTicket()
-            print("Booked \(tickets)")
+        concurrentQueue1.async {
+            let booked = tsViewModel.bookedTicket()
+            print("Booked \(booked)")
         }
-        
-        Task {
-            let tickets = await tsViewModel.getAllTickets()
-            print("Available \(tickets)")
+        concurrentQueue2.async {
+            let available = tsViewModel.getAllTickets()
+            print("Available \(available)")
         }
-//        
-//        let queue1 = DispatchQueue(label: "q1", attributes: .concurrent)
-//        let queue2 = DispatchQueue(label: "q2", attributes: .concurrent)
-//        
-//        queue1.async {
-//            let tickets = tsViewModel.bookedTicket()
-//            print("Booked \(tickets)")
-//        }
-//        
-//        queue2.async {
-//            let tickets = tsViewModel.getAllTickets()
-//            print("Available \(tickets)")
-//        }
-
         
     }
     
